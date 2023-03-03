@@ -1,0 +1,29 @@
+.container{
+    /* border: solid black; */
+    /* border-radius: 3px; */
+    /* color:rgb(77, 123, 163) */
+    position: absolute;
+    top: 20px;
+    right: 50px;
+}
+
+.input{
+    background-color:rgb(199, 216, 216);
+    border: none;
+    border-radius: 2px;
+}
+
+.input:hover{
+    background-color: white;
+}
+
+.buttonAgregar{
+    border-radius: 2px;
+    margin-left: 10px;
+    border: none;
+}
+
+.buttonAgregar:hover{
+    background-color: rgba(57, 86, 182, 0.623);
+    color:white;
+}

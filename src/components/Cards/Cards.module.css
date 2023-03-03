@@ -1,0 +1,10 @@
+.container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    position: center;
+    gap: 5px;
+    margin-left:5px;
+    /* border: solid red; */
+    /* border-radius: 5px; */
+}
