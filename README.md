@@ -1,6 +1,6 @@
-# **HW 05 Express | Integración**
+# **HW 06 Async Await | Integración**
 
-## **Duración estimada 🕒**
+## **🕒 Duración estimada**
 
 x minutos
 
@@ -8,37 +8,33 @@ x minutos
 
 ---
 
-## **Rick & Morty App**
+## **💻 Rick & Morty App**
 
-### **INTRO**
+### **📝 INTRO**
 
-En base a lo practicado en la homework Exercises, vamos a crear rutas con sus respectivas solicitudes HTTP que se van a ir guardando en un array que simulará nuestra base de datos. En esta homework consumiremos la información de la API de Rick & Morty que luego enviaremos a nuestro frontend.
+En esta homework vamos a seguir trabajando en nuetra App de Rick & Morty del lado del servidor. En base a las rutas asincrónicas ya creadas, vamos a pasarlas de promesas a AsyncAwait.
+
+Las rutas que tenemos creadas hasta el momento son:
+
+-  GET onSearch
+-  GET Detail
+-  GET favorites
+-  POST favorites
+-  DELETE favorites
 
 <br />
 
 ---
 
+## **📋 INSTRUCCIONES**
+
 ### **👩‍💻 EJERCICIO 1**
 
-### **Crear servidor con Express**
+### **GET Search**
 
-1. Instala la librería **`express`**.
+1. Dirígete a tu carpeta **`controllers`** y modifica la función **`getCharById`** de modo tal que utilices async/await y no promesas.
 
-2. Anteriormente habías creado tu servidor con Node puro en el archivo **`server.js`**, ahora lo cambiaremos para utilizar directamente el framework Express. Por lo que debes eliminar todo el contenido de este archivo.
-
-3. Dentro del archivo **`server.js`** importa a `express` e incializa un nuevo servidor en el puerto 3001. Esta sería una forma de seguir buenas prácticas:
-
-```javascript
-const express = require('express');
-const server = express();
-const PORT = 3001;
-
-server.listen(PORT, () => {
-   console.log('Server raised in port ' + PORT);
-});
-```
-
-😎 Acabas de crear tu servidor con Express!!
+2. Para manejar correctamente el error, envuelve el contenido de esta función en un **try-catch** en el caso de que la promesa falle, envuelve el código dentro del bloque try-catch.
 
 <br />
 
@@ -46,92 +42,52 @@ server.listen(PORT, () => {
 
 ### **👩‍💻 EJERCICIO 2**
 
-### **Reconstruyendo los controladores**
+### **GET Detail**
 
-En este ejercicio recontruiremos nuestros dos controladores de modo que funcionen con express.
+1. Dirígete a tu carpeta **`controllers`** y modifica la función **`getCharDetail`** de modo tal que utilices async/await y no promesas.
 
-### **getCharByID**
-
-Elimina todo lo que tienes en este archivo, y si estos pasos:
-
-1. Guarda esta url en una constante llamada **`URL`**: "_https://rickandmortyapi.com/api/character/_".
-
-2. Crea una función **`getChatById`** y expórtala. Recibe por parámetro a **`req`** y **`res`**. Luego crea una constante con el nombre **`params`** e iguálalo a **req.params**.
-
-3. Haz una petición a la API, y recibe el personaje con el ID que obtuviste de params. Sólo necesitas las propiedades: **id**, **name**, **species**, **image** y **gender**.
-
-4. En el caso de que salga todo OK, la ruta debe responder un JSON con la información del personaje.
-
-5. Si hay un error debes responder con un status 500, y un JSON con la propiedad **`message`** de **error**.
-
-</br>
-
-### **getCharDetail**
-
-1. En este caso debes repetir todo lo que hiciste en el controlador anterior, con la diferencia que esta vez debes agregar la propiedad **origin** de tu personaje.
+2. Para manejar correctamente el error, envuelve el contenido de esta función en un **try-catch** en el caso de que la promesa falle, envuelve el código dentro del bloque try-catch.
 
 <br />
 
 ---
 
-### **👩‍💻 EJERCICIO 3**
+### **👀 COMPROBEMOS...**
 
-### **Crear Rutas**
+Levanta el servidor con el comando:
 
-En la constante **app** ahora tenemos acceso a los métodos HTTP, vamos a necesitar para este ejercicio el método `get` y traer información. Este método recibe dos argumentos: el endpoint (path) y una función callback. Esta función callback recibe dos parámetros: **`req`** y **`res`**.
-
-Dirígete a la carpeta **routes** y crea un archivo llamado **`index.js`**. En este archivo deberás:
-
-1. importar mediante destructuring la función **`Router`** de **express**.
-
-2. importa los dos controlladores que hemos creado en la homewrok anterior: **`getCharById`** y **`getCharDetail`**.
-
-3. Debajo de esto crea una constante con el nombre **`router`** e iguálalo de la siguiente manear con la función **`Router`** ejecutada:
-
-```javascript
-const router = Router();
+```bash
+    npm start
 ```
 
-4. Ahora crearemos nuestras primeras dos rutas de express. Para esto, a partir de la constante **`router`**, llama al método **get**. Este método debe recibir dos argumentos. El primero será el path de la ruta, que en este caso es "_/onsearch/:id_". El segundo argumento será la función **`getCharById`**.
+Una vez levantado, verifica lo siguiente:
 
-5. Ahora haremos lo mismo con detail. A partir de **`router`** llama al método **get**. Como primer parámetro le pasaras el path "_/detail/:id_". El segundo argumento será la función **`getCharDetail`**.
+</br >
 
-6. Por último exporta a la constante **`router`**.
+### **FRONTEND**
 
-7. Importa este **`router`** dentro del archivo **`server`**. Crea un middleware que tenga como parámetro a la variable **`express`** siendo ejecutado por el método **json**. Crea otro middleware que como primer argumento le pases el path "_/_", y como segundo el router.
+### **ACTIONS**
 
-<br />
+Haremos un par de cambios en el lado frontend:
 
----
+1. La action `addFavorites`, ahora debe ser una función asíncrona, promisificada con async/await, manejando errores con try/catch que envíe el personaje favorito al endpoint con el método POST **http://localhost:3001/rickandmorty/fav**.
 
-### **👩‍💻 EJERCICIO 3**
+2. La action `removeFavorites`, ahora debe ser una función asíncrona, promisificada con async/await, manejando errores con try/catch que elimine el personaje favorito con el método DELETE al endpoint **http://localhost:3001/rickandmorty/fav/:id**.
 
-## **Ruta Fav**
+3. Crea una action `getFavorites`, debe ser una función asíncrona, promisificada con async/await, manejando errores con try/catch que solicite el personaje favorito con el método GET al endpoint **http://localhost:3001/rickandmorty/fav**.
 
-Dentro de tu carpeta **`util`** simularemos una base de datos, que en este caso será un arreglo. Para esto crea un archivo que se llame **`favs`**. Dentro de él crea y exporta un arreglo vacío.
-
-1. Crea la ruta **POST/`rickandmorty`/fav**, la cual recibe un personaje por **`req.body`**. A este personaje lo deberás pushear dentro de este arreglo.
-
-2. Crea la ruta **GET/`rickandmorty`/fav**, la cual debe obtener todos los personajes guardados en el arreglo **`favs`**.
-
-3. Crea la ruta **DELETE/`rickandmorty`/fav/:id**, que elimine el personaje en el arreglo **fav** a partir del **id** que recibe por parámetro.
-
-<br />
+4. Levanta también tu aplicación en **http://localhost:3000** para ver tu aplicación Rick & Morty funcionando completamente.
 
 ---
 
-### **👩‍💻 EJERCICIO 4**
+</br >
 
-### **Conectar rutas con frontend**
+## **🚨 A TENER EN CUENTA**
 
-Por último, recordemos que en el front habíamos configurado la ruta para que consuma los datos desde nuestro servidor.
+Si tu servidor no está levantado, o si los links no fueron bien escritos, tu aplicación no funcionará correctamente.
 
-Ahora dirígete a la carpeta **front** y haz los siguientes cambios:
+</br >
 
-1. En el componente Detail donde llamamos a la API de Rick & Morty en la ruta **https://rickandmortyapi.com/api/character/** cámbiala por la ruta que creamos en el back: **http://localhost:3001/rickandmorty/detail**
+---
 
-2. En la action para agregar favorito, ahora debes enviar los personajes al endpoint **http://localhost:3001/rickandmorty/fav** con el método `post`.
-
-3. En la action para eliminar favorito, ahora debes enviar el personaje a eliminar al endpoint **http://localhost:3001/rickandmorty/fav** con el método `delete`.
-
-✨✨Llegamos al final de esta homework creamos nuestro servidor y tres rutas para nuestro front!! 🚀🚀
+¡Felicitaciones! Ahora tienes una comunicación front-back completa!🥳🥳
